@@ -1,9 +1,5 @@
 #include "doctest.h"
 
-#include <iostream>
-
-using namespace std;
-
 #include "sources/MagicalContainer.hpp"
 
 TEST_CASE("MagicalContainer")
@@ -22,7 +18,6 @@ TEST_CASE("MagicalContainer")
     container.removeElement(2);
     CHECK(container.size() == 3);
 
-    // container.removeElement(1); // no such element
     CHECK(container.size() == 3);
 }
 
