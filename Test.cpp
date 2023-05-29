@@ -2,6 +2,8 @@
 
 #include "sources/MagicalContainer.hpp"
 
+using namespace ariel;
+
 TEST_CASE("MagicalContainer")
 {
     MagicalContainer container;
@@ -26,9 +28,9 @@ TEST_CASE("AscendingIterator")
     MagicalContainer container;
     MagicalContainer container2;
 
-    AscendingIterator ascendingIterator1(container);
-    AscendingIterator ascendingIterator2(ascendingIterator1); // copy constructor
-    AscendingIterator ascendingIterator3(container2);
+    MagicalContainer::AscendingIterator ascendingIterator1(container);
+    MagicalContainer::AscendingIterator ascendingIterator2(ascendingIterator1); // copy constructor
+    MagicalContainer::AscendingIterator ascendingIterator3(container2);
 
     CHECK_EQ(ascendingIterator1.begin(), ascendingIterator1.end()); // empty container
 
@@ -66,7 +68,7 @@ TEST_CASE("AscendingIterator")
     // Order test
     int expectedOrder[] = {2, 3, 9, 17, 25};
     int i = 0;
-    for (AscendingIterator it = ascendingIterator1.begin(); it != ascendingIterator1.end(); ++it, ++i)
+    for (MagicalContainer::AscendingIterator it = ascendingIterator1.begin(); it != ascendingIterator1.end(); ++it, ++i)
     {
         CHECK(*it == expectedOrder[i]);
     }
@@ -75,7 +77,7 @@ TEST_CASE("AscendingIterator")
     container.addElement(1000);
     int expectedOrder2[] = {2, 3, 9, 17, 25, 1000};
     i = 0;
-    for (AscendingIterator it = ascendingIterator1.begin(); it != ascendingIterator1.end(); ++it, ++i)
+    for (MagicalContainer::AscendingIterator it = ascendingIterator1.begin(); it != ascendingIterator1.end(); ++it, ++i)
     {
         CHECK(*it == expectedOrder2[i]);
     }
@@ -83,7 +85,7 @@ TEST_CASE("AscendingIterator")
     container.removeElement(2);
     int expectedOrder3[] = {3, 9, 25, 1000};
     i = 0;
-    for (AscendingIterator it = ascendingIterator1.begin(); it != ascendingIterator1.end(); ++it, ++i)
+    for (MagicalContainer::AscendingIterator it = ascendingIterator1.begin(); it != ascendingIterator1.end(); ++it, ++i)
     {
         CHECK(*it == expectedOrder3[i]);
     }
@@ -95,9 +97,9 @@ TEST_CASE("SideCrossIterator")
     MagicalContainer container;
     MagicalContainer container2;
 
-    SideCrossIterator sideCrossIterator1(container);
-    SideCrossIterator sideCrossIterator2(sideCrossIterator1); // copy constructor
-    SideCrossIterator sideCrossIterator3(container2);
+    MagicalContainer::SideCrossIterator sideCrossIterator1(container);
+    MagicalContainer::SideCrossIterator sideCrossIterator2(sideCrossIterator1); // copy constructor
+    MagicalContainer::SideCrossIterator sideCrossIterator3(container2);
 
     CHECK_EQ(sideCrossIterator1.begin(), sideCrossIterator1.end()); // empty container
 
@@ -114,9 +116,9 @@ TEST_CASE("SideCrossIterator")
     container2.addElement(53);
 
     // Initialization test
-    CHECK(*sideCrossIterator1.begin() == 17);                          // first element
+    CHECK(*sideCrossIterator1.begin() == 2);                          // first element
     CHECK(*sideCrossIterator1.begin() == *sideCrossIterator2.begin()); // same value because of copy constructor
-    CHECK(*sideCrossIterator3.begin() == 12);                          // first element
+    CHECK(*sideCrossIterator3.begin() == 1);                          // first element
 
     // Comparison test
     CHECK((sideCrossIterator1 == sideCrossIterator2));
@@ -127,32 +129,32 @@ TEST_CASE("SideCrossIterator")
 
     // Incrementation test and comparison test
     ++sideCrossIterator1;
-    CHECK(*sideCrossIterator1 == 3);
+    CHECK(*sideCrossIterator1 == 25);
     CHECK((sideCrossIterator1 != sideCrossIterator2));
     CHECK((sideCrossIterator1 > sideCrossIterator2));
     CHECK((sideCrossIterator2 < sideCrossIterator1));
 
     // Order test
-    int expectedOrder[] = {17, 3, 2, 9, 25};
+    int expectedOrder[] = {2,25,3,17,9};
     int i = 0;
-    for (SideCrossIterator it = sideCrossIterator1.begin(); it != sideCrossIterator1.end(); ++it, ++i)
+    for (MagicalContainer::SideCrossIterator it = sideCrossIterator1.begin(); it != sideCrossIterator1.end(); ++it, ++i)
     {
         CHECK(*it == expectedOrder[i]);
     }
 
     // Container is not detached from iterator test
     container.addElement(1000);
-    int expectedOrder2[] = {17, 1000, 2, 3, 25, 9};
+    int expectedOrder2[] = {2,1000,3,25,9,17};
     i = 0;
-    for (SideCrossIterator it = sideCrossIterator1.begin(); it != sideCrossIterator1.end(); ++it, ++i)
+    for (MagicalContainer::SideCrossIterator it = sideCrossIterator1.begin(); it != sideCrossIterator1.end(); ++it, ++i)
     {
         CHECK(*it == expectedOrder2[i]);
     }
     container.removeElement(17);
     container.removeElement(2);
-    int expectedOrder3[] = {25,1000,9,3};
+    int expectedOrder3[] = {3,1000,9,25};
     i = 0;
-    for (SideCrossIterator it = sideCrossIterator1.begin(); it != sideCrossIterator1.end(); ++it, ++i)
+    for (MagicalContainer::SideCrossIterator it = sideCrossIterator1.begin(); it != sideCrossIterator1.end(); ++it, ++i)
     {
         CHECK(*it == expectedOrder3[i]);
     }
@@ -163,9 +165,9 @@ TEST_CASE("PrimeIterator")
     MagicalContainer container;
     MagicalContainer container2;
 
-    PrimeIterator primeIterator1(container);
-    PrimeIterator primeIterator2(primeIterator1); // copy constructor
-    PrimeIterator primeIterator3(container2);
+    MagicalContainer::PrimeIterator primeIterator1(container);
+    MagicalContainer::PrimeIterator primeIterator2(primeIterator1); // copy constructor
+    MagicalContainer::PrimeIterator primeIterator3(container2);
 
     CHECK_EQ(primeIterator1.begin(), primeIterator1.end()); // empty container
 
@@ -203,7 +205,7 @@ TEST_CASE("PrimeIterator")
     // Order test
     int expectedOrder[] = {17, 2, 3};
     int i = 0;
-    for (PrimeIterator it = primeIterator1.begin(); it != primeIterator1.end(); ++it, ++i)
+    for (MagicalContainer::PrimeIterator it = primeIterator1.begin(); it != primeIterator1.end(); ++it, ++i)
     {
         CHECK(*it == expectedOrder[i]);
     }
@@ -212,7 +214,7 @@ TEST_CASE("PrimeIterator")
     container.addElement(1009);
     int expectedOrder2[] = {17,2,3,1009};
     i = 0;
-    for (PrimeIterator it = primeIterator1.begin(); it != primeIterator1.end(); ++it, ++i)
+    for (MagicalContainer::PrimeIterator it = primeIterator1.begin(); it != primeIterator1.end(); ++it, ++i)
     {
         CHECK(*it == expectedOrder2[i]);
     }
@@ -220,7 +222,7 @@ TEST_CASE("PrimeIterator")
     container.removeElement(2);
     int expectedOrder3[] = {3,1009};
     i = 0;
-    for (PrimeIterator it = primeIterator1.begin(); it != primeIterator1.end(); ++it, ++i)
+    for (MagicalContainer::PrimeIterator it = primeIterator1.begin(); it != primeIterator1.end(); ++it, ++i)
     {
         CHECK(*it == expectedOrder3[i]);
     }
