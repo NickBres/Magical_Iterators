@@ -18,6 +18,8 @@ namespace ariel
         void updateCrossElements();
         bool isPrime(int number) const;
 
+        class BasicIterator;
+
     public:
         MagicalContainer() = default;
         ~MagicalContainer() = default;
@@ -39,12 +41,30 @@ namespace ariel
         class PrimeIterator;
     };
 
-    class MagicalContainer::AscendingIterator
+    class MagicalContainer::BasicIterator
+    {
+    protected:
+        MagicalContainer *magicalContainer;
+        size_t pos;
+
+    public:
+        BasicIterator(MagicalContainer &magicalContainer);
+        BasicIterator(const BasicIterator &other);
+        ~BasicIterator() = default;
+        BasicIterator(BasicIterator &&other) noexcept = default;
+        BasicIterator &operator=(BasicIterator &&other) noexcept = default;
+        BasicIterator &operator=(const BasicIterator &other) = default;
+
+        bool operator==(const BasicIterator &other) const;
+        bool operator!=(const BasicIterator &other) const;
+        bool operator>(const BasicIterator &other) const;
+        bool operator<(const BasicIterator &other) const;
+    };
+
+    class MagicalContainer::AscendingIterator : public MagicalContainer::BasicIterator
     {
     private:
-        MagicalContainer *magicalContainer;
         std::multiset<int>::iterator it;
-        size_t pos;
 
     public:
         AscendingIterator(MagicalContainer &magicalContainer);
@@ -54,26 +74,18 @@ namespace ariel
         AscendingIterator &operator=(AscendingIterator &&other) noexcept = default;
 
         AscendingIterator &operator=(const AscendingIterator &other);
-        bool operator==(const AscendingIterator &other) const;
-        bool operator!=(const AscendingIterator &other) const;
-        bool operator>(const AscendingIterator &other) const;
-        bool operator<(const AscendingIterator &other) const;
-
-        size_t getPosition() const { return pos; };
 
         int operator*() const;
         AscendingIterator &operator++();
 
-        AscendingIterator &begin();
-        AscendingIterator &end();
+        AscendingIterator begin();
+        AscendingIterator end();
     };
 
-    class MagicalContainer::SideCrossIterator
+    class MagicalContainer::SideCrossIterator : public MagicalContainer::BasicIterator
     {
     private:
-        MagicalContainer *magicalContainer;
         std::list<int>::iterator it;
-        size_t pos;
 
     public:
         SideCrossIterator(MagicalContainer &magicalContainer);
@@ -83,26 +95,18 @@ namespace ariel
         SideCrossIterator &operator=(SideCrossIterator &&other) noexcept = default;
 
         SideCrossIterator &operator=(const SideCrossIterator &other);
-        bool operator==(const SideCrossIterator &other) const;
-        bool operator!=(const SideCrossIterator &other) const;
-        bool operator>(const SideCrossIterator &other) const;
-        bool operator<(const SideCrossIterator &other) const;
 
         int operator*() const;
         SideCrossIterator &operator++();
 
-        size_t getPosition() const { return pos; };
-
-        SideCrossIterator &begin();
-        SideCrossIterator &end();
+        SideCrossIterator begin();
+        SideCrossIterator end();
     };
 
-    class MagicalContainer::PrimeIterator
+    class MagicalContainer::PrimeIterator : public MagicalContainer::BasicIterator
     {
     private:
-        MagicalContainer *magicalContainer;
         std::vector<int>::iterator it;
-        size_t pos;
 
     public:
         PrimeIterator(MagicalContainer &magicalContainer);
@@ -112,17 +116,11 @@ namespace ariel
         PrimeIterator &operator=(PrimeIterator &&other) noexcept = default;
 
         PrimeIterator &operator=(const PrimeIterator &other);
-        bool operator==(const PrimeIterator &other) const;
-        bool operator!=(const PrimeIterator &other) const;
-        bool operator>(const PrimeIterator &other) const;
-        bool operator<(const PrimeIterator &other) const;
 
         int operator*() const;
         PrimeIterator &operator++();
 
-        size_t getPosition() const { return pos; };
-
-        PrimeIterator &begin();
-        PrimeIterator &end();
+        PrimeIterator begin();
+        PrimeIterator end();
     };
-} // namespace ariel  
+} // namespace ariel

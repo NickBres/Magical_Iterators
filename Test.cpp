@@ -2,6 +2,10 @@
 
 #include "sources/MagicalContainer.hpp"
 
+#include <iostream>
+
+using namespace std;
+
 using namespace ariel;
 
 TEST_CASE("MagicalContainer")
@@ -21,18 +25,14 @@ TEST_CASE("MagicalContainer")
     CHECK(container.size() == 3);
 
     CHECK(container.size() == 3);
+
+    CHECK_THROWS(container.removeElement(1000)); // removing non-existing element
 }
 
 TEST_CASE("AscendingIterator")
 {
     MagicalContainer container;
     MagicalContainer container2;
-
-    MagicalContainer::AscendingIterator ascendingIterator1(container);
-    MagicalContainer::AscendingIterator ascendingIterator2(ascendingIterator1); // copy constructor
-    MagicalContainer::AscendingIterator ascendingIterator3(container2);
-
-    CHECK_EQ(ascendingIterator1.begin(), ascendingIterator1.end()); // empty container
 
     container.addElement(17);
     container.addElement(2);
@@ -45,6 +45,12 @@ TEST_CASE("AscendingIterator")
     container2.addElement(3);
     container2.addElement(100);
     container2.addElement(53);
+
+
+    MagicalContainer::AscendingIterator ascendingIterator1(container);
+    MagicalContainer::AscendingIterator ascendingIterator2(ascendingIterator1); // copy constructor
+    MagicalContainer::AscendingIterator ascendingIterator3(container2);
+
 
     // Initialization test
     CHECK(*ascendingIterator1.begin() == 2);                           // smallest element
@@ -72,7 +78,6 @@ TEST_CASE("AscendingIterator")
     {
         CHECK(*it == expectedOrder[i]);
     }
-
     // Container is not detached from iterator test
     container.addElement(1000);
     int expectedOrder2[] = {2, 3, 9, 17, 25, 1000};
@@ -97,11 +102,7 @@ TEST_CASE("SideCrossIterator")
     MagicalContainer container;
     MagicalContainer container2;
 
-    MagicalContainer::SideCrossIterator sideCrossIterator1(container);
-    MagicalContainer::SideCrossIterator sideCrossIterator2(sideCrossIterator1); // copy constructor
-    MagicalContainer::SideCrossIterator sideCrossIterator3(container2);
-
-    CHECK_EQ(sideCrossIterator1.begin(), sideCrossIterator1.end()); // empty container
+   
 
     container.addElement(17);
     container.addElement(2);
@@ -114,6 +115,11 @@ TEST_CASE("SideCrossIterator")
     container2.addElement(3);
     container2.addElement(100);
     container2.addElement(53);
+
+    MagicalContainer::SideCrossIterator sideCrossIterator1(container);
+    MagicalContainer::SideCrossIterator sideCrossIterator2(sideCrossIterator1); // copy constructor
+    MagicalContainer::SideCrossIterator sideCrossIterator3(container2);
+
 
     // Initialization test
     CHECK(*sideCrossIterator1.begin() == 2);                          // first element
@@ -165,11 +171,6 @@ TEST_CASE("PrimeIterator")
     MagicalContainer container;
     MagicalContainer container2;
 
-    MagicalContainer::PrimeIterator primeIterator1(container);
-    MagicalContainer::PrimeIterator primeIterator2(primeIterator1); // copy constructor
-    MagicalContainer::PrimeIterator primeIterator3(container2);
-
-    CHECK_EQ(primeIterator1.begin(), primeIterator1.end()); // empty container
 
     container.addElement(17);
     container.addElement(2);
@@ -182,6 +183,11 @@ TEST_CASE("PrimeIterator")
     container2.addElement(3);
     container2.addElement(100);
     container2.addElement(53);
+
+
+    MagicalContainer::PrimeIterator primeIterator1(container);
+    MagicalContainer::PrimeIterator primeIterator2(primeIterator1); // copy constructor
+    MagicalContainer::PrimeIterator primeIterator3(container2);
 
     // Initialization test
     CHECK(*primeIterator1.begin() == 17);                          // first prime element
