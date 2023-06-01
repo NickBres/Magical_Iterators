@@ -59,6 +59,8 @@ void MagicalContainer::addElement(int element)
 
 void MagicalContainer::removeElement(int element)
 {
+    if(std::find(originalElements.begin(), originalElements.end(), element) == originalElements.end()) // if element is not in originalElements
+        throw std::runtime_error("Element not found in container");
     originalElements.erase(std::remove(originalElements.begin(), originalElements.end(), element), originalElements.end()); // remove element from originalElements
     sortedElements.erase(sortedElements.find(element));                                                                     // remove element from sortedElements
     if (isPrime(element))
@@ -95,7 +97,9 @@ MagicalContainer::AscendingIterator::AscendingIterator(const AscendingIterator &
 
 MagicalContainer::AscendingIterator &MagicalContainer::AscendingIterator::operator=(const AscendingIterator &other)
 {
-    magicalContainer = other.magicalContainer;   // copy MagicalContainer
+    if (this->magicalContainer != other.magicalContainer)
+        throw std::runtime_error("Cant copy from another container"); // added only to pass the tests... there is no need for this.
+    // magicalContainer = other.magicalContainer; // copy MagicalContainer reference (instead of trowing exception)
     pos = other.pos; // copy position
     it = other.it;   // copy iterator
     return *this;
@@ -136,14 +140,14 @@ bool MagicalContainer::AscendingIterator::operator>(const AscendingIterator &oth
 int MagicalContainer::AscendingIterator::operator*() const
 {
     if (it == magicalContainer->sortedElements.end())
-        throw std::out_of_range("Iterator is out of range");
+        throw std::runtime_error("Iterator is out of range");
     return *it; // return value of iterator
 }
 
 MagicalContainer::AscendingIterator &MagicalContainer::AscendingIterator::operator++()
 {
     if (it == magicalContainer->sortedElements.end()){
-        throw std::out_of_range("Iterator is out of range");
+        throw std::runtime_error("Iterator is out of range");
         return *this;
     }
     ++it;  // increment iterator
@@ -178,7 +182,9 @@ MagicalContainer::SideCrossIterator::SideCrossIterator(const SideCrossIterator &
 
 MagicalContainer::SideCrossIterator &MagicalContainer::SideCrossIterator::operator=(const SideCrossIterator &other)
 {
-    magicalContainer = other.magicalContainer;   // copy MagicalContainer
+    if (this->magicalContainer != other.magicalContainer)
+        throw std::runtime_error("Cant copy from another container");
+    // magicalContainer = other.magicalContainer; // copy MagicalContainer reference (instead of trowing exception)s
     pos = other.pos; // copy position
     it = other.it;   // copy iterator
     return *this;
@@ -219,14 +225,14 @@ bool MagicalContainer::SideCrossIterator::operator>(const SideCrossIterator &oth
 int MagicalContainer::SideCrossIterator::operator*() const
 {
     if (it == magicalContainer->crossElements.end())
-        throw std::out_of_range("Iterator is out of range");
+        throw std::runtime_error("Iterator is out of range");
     return *it; // return value of iterator
 }
 
 MagicalContainer::SideCrossIterator &MagicalContainer::SideCrossIterator::operator++()
 {
     if (it == magicalContainer->crossElements.end()){
-        throw std::out_of_range("Iterator is out of range");
+        throw std::runtime_error("Iterator is out of range");
         return *this;
     }
     ++it;  // increment iterator
@@ -261,7 +267,9 @@ MagicalContainer::PrimeIterator::PrimeIterator(const PrimeIterator &other) : mag
 
 MagicalContainer::PrimeIterator &MagicalContainer::PrimeIterator::operator=(const PrimeIterator &other)
 {
-    magicalContainer = other.magicalContainer;   // copy MagicalContainer
+    if (this->magicalContainer != other.magicalContainer)
+        throw std::runtime_error("Cant copy from another container");
+    // magicalContainer = other.magicalContainer; // copy MagicalContainer reference (instead of trowing exception)
     pos = other.pos; // copy position
     it = other.it;   // copy iterator
     return *this;
@@ -300,14 +308,14 @@ bool MagicalContainer::PrimeIterator::operator>(const PrimeIterator &other) cons
 int MagicalContainer::PrimeIterator::operator*() const
 {
     if (it == magicalContainer->primeElements.end())
-        throw std::out_of_range("Iterator is out of range");
+        throw std::runtime_error("Iterator is out of range");
     return *it; // return value of iterator
 }
 
 MagicalContainer::PrimeIterator &MagicalContainer::PrimeIterator::operator++()
 {
     if (it == magicalContainer->primeElements.end()){
-        throw std::out_of_range("Iterator is out of range");
+        throw std::runtime_error("Iterator is out of range");
         return *this;
     }
     ++it;  // increment iterator

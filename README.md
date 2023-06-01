@@ -45,18 +45,15 @@ operator> should return true on 5>14, 2>1, 4>14
 Iterators should **NOT** be detached from the main container. If one add's an element to a container after an iterator is created the iterator should know the element return it should its turn will come. 
 
 
+**חלק ב**: יש לכתוב: 
 
-**חלק א**: יש לכתוב: 
-
-* קובץ כותרת הכולל את כל הפונקציות הדרושות (ללא מימוש). שימו לב: הכותרות צריכות להיות נכונות בהתאם למה שנלמד בהרצאות - מומלץ לחזור על החומר לפני שמתחילים לכתוב.
-* בדיקות מקיפות לכל הפונקציות הדרושות.
+*מימוש מלא למטלה כדי שהטסט יעבור.
   
 כיתבו את כל הקבצים הדרושים כך שהפקודות הבאות יעבדו ללא שגיאות:
 
 <div dir='ltr'>
 
-    make demo && ./demo
-	make test && ./test
+	bash grade
 
 </div>
 
