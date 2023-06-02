@@ -11,14 +11,16 @@ namespace ariel
     class MagicalContainer
     {
         std::vector<int> originalElements; // stores original insertion order
-        std::list<int> crossElements;      // stores elements in cross order. easier to remove elements
-        std::multiset<int> sortedElements; // stores elements in ascending order. always sorted
-        std::vector<int> primeElements;    // stores prime numbers only
+        std::vector<int *> crossElements;  // stores elements pointers in cross order
+        std::vector<int *> sortedElements; // stores elements pointers in ascending order
+        std::vector<int *> primeElements;  // stores elements pointers that are prime numbers in original order
 
-        void updateCrossElements();
         bool isPrime(int number) const;
+        void updateCrossElements();
+        void updateSortedElements();
+        void updatePrimeElements();
 
-        class BasicIterator;
+        class BasicIterator; // forward declaration of nested class 
 
     public:
         MagicalContainer() = default;
@@ -64,7 +66,7 @@ namespace ariel
     class MagicalContainer::AscendingIterator : public MagicalContainer::BasicIterator
     {
     private:
-        std::multiset<int>::iterator it;
+        std::vector<int *>::iterator it;
 
     public:
         AscendingIterator(MagicalContainer &magicalContainer);
@@ -85,7 +87,7 @@ namespace ariel
     class MagicalContainer::SideCrossIterator : public MagicalContainer::BasicIterator
     {
     private:
-        std::list<int>::iterator it;
+        std::vector<int *>::iterator it;
 
     public:
         SideCrossIterator(MagicalContainer &magicalContainer);
@@ -106,7 +108,7 @@ namespace ariel
     class MagicalContainer::PrimeIterator : public MagicalContainer::BasicIterator
     {
     private:
-        std::vector<int>::iterator it;
+        std::vector<int *>::iterator it;
 
     public:
         PrimeIterator(MagicalContainer &magicalContainer);
