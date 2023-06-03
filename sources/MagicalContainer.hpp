@@ -48,6 +48,7 @@ namespace ariel
     protected:
         MagicalContainer *magicalContainer;
         size_t pos;
+        std::vector<int *>::iterator it;
 
     public:
         BasicIterator(MagicalContainer &magicalContainer);
@@ -65,8 +66,6 @@ namespace ariel
 
     class MagicalContainer::AscendingIterator : public MagicalContainer::BasicIterator
     {
-    private:
-        std::vector<int *>::iterator it;
 
     public:
         AscendingIterator(MagicalContainer &magicalContainer);
@@ -86,8 +85,7 @@ namespace ariel
 
     class MagicalContainer::SideCrossIterator : public MagicalContainer::BasicIterator
     {
-    private:
-        std::vector<int *>::iterator it;
+        
 
     public:
         SideCrossIterator(MagicalContainer &magicalContainer);
@@ -107,8 +105,6 @@ namespace ariel
 
     class MagicalContainer::PrimeIterator : public MagicalContainer::BasicIterator
     {
-    private:
-        std::vector<int *>::iterator it;
 
     public:
         PrimeIterator(MagicalContainer &magicalContainer);
